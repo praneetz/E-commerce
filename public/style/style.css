@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 .register-container{
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -26,7 +26,7 @@ body {
 	border-radius: 3px;
 }
 .signup-form {
-	width: 400px;
+	width: 30%;
 	margin: 30px auto;
 }
 .signup-form form {
@@ -35,7 +35,7 @@ body {
 	margin-bottom: 15px;
 	background: #fff;
 	box-shadow: rgba(100, 100, 111, 0.151) 0px 7px 29px 0px;
-	padding: 30px;
+	padding: 15px;
 }
 .signup-form h2  {
 	color: #333;
@@ -43,10 +43,10 @@ body {
 	margin-top: 0;
 }
 .signup-form hr  {
-	margin: 0 -30px 20px;
+	margin: 0 -16px 20px;
 }    
 .signup-form .form-group {
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 }
 .signup-form input[type="checkbox"] {
 	margin-top: 3px;
@@ -85,4 +85,8 @@ body {
 .signup-form .hint-text  {
 	padding-bottom: 15px;
 	text-align: center;
+}
+.pristine-error {
+    display: table;
+    color: red;
 }
