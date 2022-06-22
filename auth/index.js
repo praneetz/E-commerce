@@ -16,11 +16,9 @@ exports.createUser = async (req, res) => {
     const isEmailExist = await auth.findOne({ email: req.body.email });
     const isPhoneExist = await auth.findOne({ mobile: req.body.mobile });
     if (isEmailExist || isPhoneExist)
-      return res
-        .status(400)
-        .json({
-          message: "Already existing user with given email and mobile number",
-        });
+      return res.status(400).json({
+        message: "Already existing user with given email and mobile number",
+      });
     const newAuth = new auth(req.body);
     const isCreated = await newAuth.save();
     if (!isCreated)
