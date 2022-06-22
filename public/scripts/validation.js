@@ -22,9 +22,17 @@ window.onload = () => {
         },
       });
       if (result.status === 200) return (window.location.href = "/login");
-      const jsonResult = await result.json();
+      const {message} = await result.json();
+      console.log(message)
       const errDiv = document.getElementById("serverError");
-      jsonResult.map((err) => {
+      if(!Array.isArray(message))
+      {
+        const newDiv = document.createElement("div");
+        newDiv.innerText = message;
+        errDiv.appendChild(newDiv);
+        return
+      }
+      message.map((err) => {
         const newDiv = document.createElement("div");
         newDiv.innerText = err;
         errDiv.appendChild(newDiv);

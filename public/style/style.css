@@ -95,3 +95,11 @@ body {
   display: table;
   color: red;
 }
+
+.login-form{
+  width: 24%;
+}
+.login-form form {
+  border: 1px solid rgba(255, 0, 0, 0.413);
+  padding: 23px;
+}
