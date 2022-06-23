@@ -1,5 +1,5 @@
 const route = require("express").Router();
-const { createUser,restLink,resetPassword,changePassword } = require("../auth");
+const { createUser,resetLink,resetPassword,changePassword } = require("../auth");
 const passport = require("passport");
 
 route.get("/register", (req, res) => {
@@ -34,7 +34,7 @@ route.get("/recover/password",async(req,res)=>res.render("PasswordRecover"))
 
 
 
-route.post("/recover/password",restLink)
+route.post("/recover/password",resetLink)
 
 
 route.get("/reset-password/:token",resetPassword)

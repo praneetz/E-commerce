@@ -2,8 +2,10 @@ const auth = require("../models/auth");
 const { validateAuth } = require("../models/validation/auth");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const bcrypt=require("bcrypt")
-
+const bcrypt = require("bcrypt");
+const transporter = require("../config/nodemailer");
+const path=require("path")
+const ejs=require("ejs")
 exports.createUser = async (req, res) => {
   try {
     console.log(req.body);
@@ -34,7 +36,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.restLink = async (req, res) => {
+exports.resetLink = async (req, res) => {
   try {
     const { email } = req.body;
     const isExistingUser = await auth.findOne({ email });
@@ -46,12 +48,25 @@ exports.restLink = async (req, res) => {
     );
     if (!resetLink)
       return res.render("PasswordRecover", {
-        errorMsg: "Something went wrong try agin",
+        errorMsg: "Something went wrong try again",
       });
+    const Link = `http://localhost:3090/reset-password/${resetLink}`;
+    const templatePath=path.join(__dirname,"../views/EmailTemplate.ejs")
+    const template = await ejs.renderFile(templatePath,{Name:isExistingUser.firstName,Link,Company:"E-Commerce"})
 
-    console.log(`http://localhost:3090/reset-password/${resetLink}`);
+    const info = await transporter.sendMail({
+      from: process.env.NODE_MAILER_EMAIL,
+      to: isExistingUser.email,
+      subject: "Password Reset",
+      html: template,
+    });
+
+    if (info.messageId)
+      return res.render("PasswordRecover", {
+        successMsg: `Reset Link sent to your email ${email}`,
+      });
     return res.render("PasswordRecover", {
-      successMsg: `Reset Link sent to your email ${email}`,
+      errorMsg: "Something went wrong try agin",
     });
   } catch (err) {
     console.log(err);
@@ -80,19 +95,30 @@ exports.changePassword = async (req, res) => {
   try {
     const { token } = req.params;
     const { password1, password2 } = req.body;
-    if(password1!=password2)
-    return res.render("ChangePassword",{errorMsg:"Password does'nt match"})
-    const isValidToken=await jwt.verify(token,process.env.PASSWORD_RESET_KEY)
-    if(!isValidToken)
-    return res.render("ChangePassword",{errorMsg:"Something Went Wrong"})
-    const salt=await bcrypt.genSalt()
-    const newPassword=await bcrypt.hash(password1,salt)
-    const user=await auth.findByIdAndUpdate(isValidToken._id,{password:newPassword},{new:true})
-    if(!user) 
-    return res.render("ChangePassword",{errorMsg:"Something Went Wrong"})
-    return res.redirect("/login")
+    if (!password1 || !password2)
+      return res.render("ChangePassword", { errorMsg: "Password too short " });
+    if (password1 != password2)
+      return res.render("ChangePassword", {
+        errorMsg: "Password does'nt match",
+      });
+    const isValidToken = await jwt.verify(
+      token,
+      process.env.PASSWORD_RESET_KEY
+    );
+    if (!isValidToken)
+      return res.render("ChangePassword", { errorMsg: "Something Went Wrong" });
+    const salt = await bcrypt.genSalt();
+    const newPassword = await bcrypt.hash(password1, salt);
+    const user = await auth.findByIdAndUpdate(
+      isValidToken._id,
+      { password: newPassword },
+      { new: true }
+    );
+    if (!user)
+      return res.render("ChangePassword", { errorMsg: "Something Went Wrong" });
+    return res.redirect("/login");
   } catch (err) {
     console.log(err);
-    return res.render("ChangePassword",{errorMsg:"Something Went Wrong"})
+    return res.render("ChangePassword", { errorMsg: "Something Went Wrong" });
   }
 };
