@@ -23,7 +23,13 @@ app.use(route)
 
 
 
-app.get("/", (req, res) => res.render("Home"));
+app.get("/", (req, res) => {
+  console.log(req.user)
+  res.render("Home")
+  
+});
+
+app.get("*",(req,res)=>res.render("404"))
 
 
 app.listen(port, () =>
