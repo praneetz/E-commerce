@@ -9,7 +9,7 @@ passport.use(
       const isUser = await auth.findOne({ email });
       if (!isUser) return done(null, false);
       const isValidPassword = await bcrypt.compare(password, isUser.password);
-      if (!isValidPassword) return done(null, false);
+      if (!isValidPassword) return done(null, false,{message:"password not matched!"});
       const { _id, firstName, lastName, mobile } = isUser;
       return done(null, { _id, firstName, lastName, email, mobile });
     } catch (err) {
