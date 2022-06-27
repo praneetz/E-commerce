@@ -25,7 +25,7 @@ app.use(route)
 
 app.get("/", (req, res) => {
   console.log(req.user)
-  res.render("Home")
+  res.render("AdminDashboard")
   
 });
 
