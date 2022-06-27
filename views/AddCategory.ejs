@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://kit.fontawesome.com/8214579104.js" crossorigin="anonymous"></script>
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css" />
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="../../plugins/sweetalert2/sweetalert2.min.css" />
+  <!-- Toastr -->
+  <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css" />
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include("./common/AdminNavbar") %>
+    <%- include("./common/AdminSidebar") %>
+      <div class="content-wrapper" style="display: flex;align-items: center;justify-content: space-around;">
+        <section class="content" style="width: 80%;">
+          <div class="container-fluid">
+            <div class="row">
+              <!-- left column -->
+              <div class="col-md-12">
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Create Category</h3>
+                  </div>
+
+                  <div class="card-body">
+
+                    <form method="post">
+
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Category Name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" name="catName"
+                          placeholder="Category" required style="text-transform: uppercase;">
+                      </div>
+                      <div class="form-group">
+                        <label>Select ParentCategory</label>
+                        <select class="form-control" name="subCat">
+                          <option value="">none</option>
+                          <%if(typeof(list)!="undefined"){%>
+                            <%list.map((li)=>{%>
+                              <option value=<%-li._id%>><%-li.categoryName%>
+                              </option>
+                              <%})%>
+
+                                <%}%>
+                        </select>
+                      </div>
+
+
+
+                  </div>
+                  <div class="card-footer" style="text-align:center;">
+                    <button type="submit" class="btn btn-primary" style="width: 80%;">Create Category</button>
+                  </div>
+                  <%if(typeof(err)!="undefined"){%>
+                    <div class="form-group" style="text-align: center;color: red;">
+                      <label>
+                        <%-err%>
+                      </label>
+                    </div>
+                    <%}%>
+                      <%if(typeof(success)!="undefined"){%>
+                        <div class="form-group" style="text-align: center;color: green;">
+                          <label>
+                            <%-success%>
+                          </label>
+                        </div>
+                        <%}%>
+                          </form>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+
+
+
+
+
+
+
+
+      <script src="../../plugins/jquery/jquery.min.js"></script>
+      <!-- Bootstrap 4 -->
+      <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- DataTables  & Plugins -->
+      <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+      <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+      <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+      <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+      <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+      <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+      <script src="../../plugins/jszip/jszip.min.js"></script>
+      <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+      <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+      <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+      <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+      <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="../../dist/js/adminlte.min.js"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script src="../../dist/js/demo.js"></script>
+      <script>
+        $(function () {
+          $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+          }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+          $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+          });
+        });
+      </script>
+</body>
+
+</html>
