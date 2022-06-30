@@ -34,14 +34,49 @@ exports.addCategory = async (req, res) => {
 exports.getCategory = async (req, res) => {
   try {
     let list = await category.find({}).select(["-createdAt", "-updatedAt"]);
-    // console.log(list.filter((fl)=>fl.subCategory=="62b95a9a208500a11ddca370"))
-    list = createCategoryList(list);
-    // return res.json(list)
     res.render("AdminCategoryList", { list });
   } catch (err) {
     console.log(err);
   }
 };
+
+exports.deleteCategory = async (req, res) => {
+  try {
+    await category.findByIdAndDelete(req.params.id);
+    res.redirect("/category/list");
+  } catch (err) {
+    console.log(err);
+    res.redirect("/category/list");
+  }
+};
+exports.updateCategory = async (req, res) => {
+  try {
+    let { catName: categoryName, subCat: subCategory } = req.body;
+    categoryName = categoryName.toUpperCase();
+    if (!subCategory)
+      await category.findByIdAndUpdate(req.params.id, {
+        categoryName,
+        subCategory: null,
+      });
+    else
+      await category.findByIdAndUpdate(req.params.id, {
+        categoryName,
+        subCategory,
+      });
+    res.redirect(req._parsedOriginalUrl.pathname);
+  } catch (err) {
+    console.log(err);
+    res.redirect(req._parsedOriginalUrl.pathname);
+  }
+};
+
+exports.demoData=async(req,res)=>{
+  let list = await category.find({}).select(["-createdAt", "-updatedAt"]);
+  list=createCategoryList(list, subCategory = null)
+  res.json(list)
+}
+
+
 
 function createCategoryList(list, subCategory = null) {
   const catList = [];

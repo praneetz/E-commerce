@@ -19,9 +19,9 @@
 
             <tr>
               <td class="border-0"><%-li.categoryName%></td>
-              <td class="border-0"><%-li.children.length%></td>
-              <td> <button type="button" class="btn btn-block btn-outline-warning btn-sm" style="width: 40%;">Update</button></td>
-              <td> <button type="button" class="btn btn-block btn-outline-danger btn-sm" style="width: 40%;">Delete</button></td>
+              <td class="border-0">1</td>
+              <td><a href='/category/update/<%-li._id%>'><button type="button" class="btn btn-block btn-outline-warning btn-sm" style="width: 40%;">Update</button></a> </td>
+              <td><a href='/category/delete/<%-li._id%>'> <button type="button" class="btn btn-block btn-outline-danger btn-sm" style="width: 40%;">Delete</button></a></td>
             </tr>
             <%})%>
           
