@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://kit.fontawesome.com/8214579104.js" crossorigin="anonymous"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css" />
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../../plugins/sweetalert2/sweetalert2.min.css" />
+    <!-- Toastr -->
+    <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <%- include("./common/AdminNavbar") %>
+        <%- include("./common/AdminSidebar") %>
+            <div class="content-wrapper card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-4">
+                            <h3 class="card-title">Product List</h3>
+                        </div>
+                        <div class="form-outline mb-4 col-8">
+                            <input type="search" placeholder="Search" class="form-control" id="datatable-search-input">
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Available</th>
+                                <th>Purchases</th>
+                                <th>Product Sales</th>
+                                <th>Stock</th>
+                                <th>Price</th>
+                                <th>Setting</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%if(typeof(list)!="undefined"){%>
+                                <%list.map((li)=>{%>
+                                    <tr>
+                                        <td>
+                                            <%if(li.images.length>0){%>
+                                            <img class=" img-fluid small" src='/productImages/<%-li.images[0]%>'
+                                                alt="User profile picture" height="25px" width="55px" />
+                                                <%}else{%>
+                                                    Image Not Available!
+                                                    <%}%>
+                                        </td>
+                                        <td><%-li.productName%></td>
+                                        <td><%-li.quantity%></td>
+                                        <td>50</td>
+                                        <td>500000</td>
+                                        <td>In stock</td>
+                                        <td><%-li.price%></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm"
+                                                style="display: flex;align-items:center;justify-content:space-around">
+                                                <a href="/product/edit/<%-li._id%>" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <%})%>
+                                
+                            <%}%>
+                            
+                           
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <script src="../../plugins/jquery/jquery.min.js"></script>
+            <!-- Bootstrap 4 -->
+            <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- DataTables  & Plugins -->
+            <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+            <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+            <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+            <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+            <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+            <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+            <script src="../../plugins/jszip/jszip.min.js"></script>
+            <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+            <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+            <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+            <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+            <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+            <!-- AdminLTE App -->
+            <script src="../../dist/js/adminlte.min.js"></script>
+            <!-- AdminLTE for demo purposes -->
+            <script src="../../dist/js/demo.js"></script>
+            <script>
+                $(function () {
+                    $("#example1").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false,
+                        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                    $('#example2').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": false,
+                        "responsive": true,
+                    });
+                });
+            </script>
+</body>
+
+</html>
