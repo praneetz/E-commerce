@@ -1,11 +1,15 @@
 const { default: mongoose } = require("mongoose");
 const category = require("../models/category");
+const {createCategoryList}=require("./functions")
 
 exports.addCategory = async (req, res) => {
   try {
+    let list = await category.getAllCategory();
+    list = list.filter((li) => li.subCategory == null);
     let { catName: categoryName, subCat: subCategory } = req.body;
     categoryName = categoryName.toUpperCase();
     const isExist = await category.findOne({ categoryName });
+    
     if (isExist)
       return res.render("AddCategory", {
         err: `${categoryName} category already Exist`,
@@ -16,8 +20,6 @@ exports.addCategory = async (req, res) => {
     else newCategory = new category({ categoryName, subCategory });
     await newCategory.save();
 
-    let list = await category.getAllCategory();
-    list = list.filter((li) => li.subCategory == null);
     return res.render("AddCategory", {
       success: `${categoryName} category Added`,
       list,
@@ -78,17 +80,3 @@ exports.demoData=async(req,res)=>{
 
 
 
-function createCategoryList(list, subCategory = null) {
-  const catList = [];
-  let theList;
-  if (subCategory == null) theList = list.filter((d) => d.subCategory === null);
-  else theList = list.filter((d) => d.subCategory == subCategory.toString());
-  for (li of theList) {
-    catList.push({
-      _id: li._id,
-      categoryName: li.categoryName,
-      children: createCategoryList(list, li._id),
-    });
-  }
-  return catList;
-}

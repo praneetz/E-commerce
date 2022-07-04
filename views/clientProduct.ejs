@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <!-- basic -->
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <!-- mobile metas -->
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+   <!-- site metas -->
+   <title>cla</title>
+   <meta name="keywords" content="">
+   <meta name="description" content="">
+   <meta name="author" content="">
+   <!-- bootstrap css -->
+   <link rel="stylesheet" href="/css/bootstrap.min.css">
+   <!-- style css -->
+   <link rel="stylesheet" href="/css/style.css">
+   <!-- Responsive-->
+   <link rel="stylesheet" href="/css/responsive.css">
+   <!-- fevicon -->
+   <link rel="icon" href="/images/fevicon.png" type="image/gif" />
+   <!-- Scrollbar Custom CSS -->
+   <link rel="stylesheet" href="/css/jquery.mCustomScrollbar.min.css">
+   <!-- Tweaks for older IEs-->
+   <link rel="stylesheet" href="/https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+   <link rel="stylesheet" href="/https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
+      media="screen">
+   <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+<!-- body -->
+
+<body class="main-layout inner_posituong">
+   <!-- loader  -->
+   <div class="loader_bg">
+      <div class="loader"><img src="/images/loading.gif" alt="#" /></div>
+   </div>
+   <!-- end loader -->
+
+   <%-include("./common/clientNevbar")%>
+      <!-- end header inner -->
+      <!-- end header -->
+      <!-- products -->
+      <div class="products">
+         <div class="container">
+
+            <!-- For demo purpose -->
+            <div class="row text-center text-white ">
+               <div class="col-lg-12 mx-auto">
+                  <div class="titlepage">
+                     <h2>Product List</h2>
+                  </div>
+               </div>
+            </div>
+            <!-- End -->
+            <%if(typeof(products!=undefined)){%>
+               <%products.map((d)=>{%>
+                  <a href="/client/product/details/<%-d._id%>"><div class="row">
+                     <div class="col">
+
+                        <!-- List group-->
+                        <ul class="list-group shadow">
+
+                           <!-- list group item-->
+                           <li class="list-group-item">
+                              <!-- Custom content-->
+                              <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                 <div class="media-body order-2 order-lg-1">
+                                    <h5 class="mt-0 font-weight-bold mb-2">
+                                       <%-d.productName%>
+                                    </h5>
+                                    <p class="font-italic text-muted mb-0 small">
+                                       <%-d.sortDesc%>
+                                    </p>
+                                    <div class="d-flex align-items-center justify-content-between mt-1">
+                                       <h6 class="font-weight-bold my-2">Rs:-<%-d.price%>
+                                       </h6>
+                                       <ul class="list-inline small">
+                                          <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                          <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                          <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                          <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
+                                          <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>
+                                       </ul>
+                                    </div>
+                                    <div class="row">
+                                          <a style="width:40%;" href="/Add-to-cart/<%-d._id%>"><Button style="width:100%;" class="btn btn-info">Add to Cart</Button></a>
+                                    </div>
+                                 </div>
+                                 <%if(d.images.length>0){%>
+                                    <img src="/productImages/<%-d.images[0]%>" alt="Generic placeholder image"
+                                       width="200" class="ml-lg-5 order-1 order-lg-2">
+                                    <%}else{%>
+                                       <b>Image Not Available</b>
+                                       <%}%>
+                              </div>
+                              <!-- End -->
+                           </li>
+                           <!-- End -->
+
+                           <!-- list group item-->
+
+                           <!-- End -->
+
+                        </ul>
+                        <!-- End -->
+                     </div>
+                  </div></a>
+
+                  <%})%>
+                     <%if(products.length==0){%>
+                        <div class="row">
+                           <div class="col-12">
+                              <h1 style="text-align:center;">Ooops.. Product Not Found!</h1>
+                           </div>
+                        </div>
+
+                        <%}%>
+
+                           <%}%>
+
+
+         </div>
+      </div>
+      <!--Our Product-->
+      <%-include("./common/OurProduct")%>
+         <!--  footer -->
+         <%-include("./common/Footer")%>
+            <!-- Javascript files-->
+            <script src="/js/jquery.min.js"></script>
+            <script src="/js/popper.min.js"></script>
+            <script src="/js/bootstrap.bundle.min.js"></script>
+            <script src="/js/jquery-3.0.0.min.js"></script>
+            <!-- sidebar -->
+            <script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
+            <script src="/js/custom.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<div class="products">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="titlepage">
+                    <h2>Our Products</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="our_products">
+                    <div class="row">
+                        <%categoryChild.map((chCat)=>{%>
+                            <div class="col-md-4 margin_bottom1">
+                                <div class="product_box">
+                                    <figure><img src="/images/<%-chCat.categoryName%>.png" alt="#" /></figure>
+                                    <h3 style="cursor: pointer;">
+                                        <%-chCat.categoryName%>
+                                    </h3>
+                                </div>
+                            </div>
+
+                            <%})%>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end products -->

@@ -24,8 +24,9 @@ app.use(route)
 
 
 app.get("/", (req, res) => {
-  console.log(req.user)
-  res.render("AdminDashboard")
+  if(!req.user||!req.user.isAdmin)
+  return res.redirect("/client/home")
+  return res.render("AdminDashboard")
   
 });
 
