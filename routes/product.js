@@ -1,5 +1,5 @@
 const route=require("express").Router()
-const {addProduct,getProduct,editProduct,updateProduct,deleteImg,uploadImage}=require("../controllers/product")
+const {addProductP1,getProduct,editProduct,updateProduct,deleteImg,uploadImage,createSize,addProductP2,createStorage,addElecProductP2}=require("../controllers/product")
 const category=require("../models/category")
 const multer=require("multer")
 const path=require("path")
@@ -24,11 +24,14 @@ const storage = multer.diskStorage({
 
 route.get("/product/add",async(req,res)=>{
     let categoryList=await category.getAllCategory()
-    categoryList=categoryList.filter((d)=>d.subCategory!=null)
-    res.render("AddProduct",{categoryList})
+    categoryList=categoryList.filter((d)=>d.subCategory==null)
+    res.render("AddProductP1",{categoryList})
 })
 
-route.post("/product/add",upload,addProduct)
+
+route.post("/product/add",addProductP1)
+route.post("/product/add/p2",addProductP2)
+route.post("/product/add/elec/p2",addElecProductP2)
 
 route.get("/product/edit/:id",editProduct);
 
@@ -39,5 +42,12 @@ route.get("/product/list",getProduct)
 route.get("/product/edit/image/delete/:id/:img",deleteImg);
 route.post("/product/edit/image/upload/:id",upload,uploadImage);
 
+
+
+// Size Route>>>>>>>>>>
+route.post("/add/size",createSize)
+
+// Storage Route>>>>>>
+route.post("/add/storage",createStorage);
 
 module.exports=route;

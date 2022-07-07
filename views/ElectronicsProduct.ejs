@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://kit.fontawesome.com/8214579104.js" crossorigin="anonymous"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css" />
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../../plugins/sweetalert2/sweetalert2.min.css" />
+    <!-- Toastr -->
+    <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <style>
+            .hide{
+                display: none;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include("./common/AdminNavbar") %>
+        <%- include("./common/AdminSidebar") %>
+            <div class="content-wrapper" style="display: flex;align-items: center;justify-content: space-around;">
+                <section class="content" style="width: 90%;">
+                    <div class="container-fluid">
+                        <div class="row" style="padding:1%;">
+                            <!-- left column -->
+                            <div class="col-md-12">
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title"><%-productName%></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="add/elec/p2" method="post">
+                                               <%if(typeof(err)!="undefined"){%>
+                                    <div class="form-group" style="text-align: center;color: red;font-size: 20px;">
+                                        <label>
+                                            <%-err%>
+                                        </label>
+                                    </div>
+                                    <%}%>
+                                        <%if(typeof(success)!="undefined"){%>
+                                            <div class="form-group" style="text-align: center;color: green; font-size: 20px;">
+                                                <label>
+                                                    <%-success%>
+                                                </label>
+                                            </div>
+                                            <%}%>
+                                            <div class="form-check form-switch" style="text-align: right;">
+                                                <input class="form-check-input" name="isStorable" type="checkbox" id="flexSwitchCheckChecked"  style="cursor: pointer;" onchange="toggleStorage()">
+                                                <label class="form-check-label" for="flexSwitchCheckChecked" style="font: size 20px;font-weight:bold;">Storable?</label>
+                                              </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1" style="font-size: 20px;">Product
+                                                    Name</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                                    placeholder="Product Name" name="productName" required
+                                                    style="font-size:20px;font-weight: 600;" value="<%-prevData.productName%>" readonly/>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                            <div class="form-group">
+                                                <label style="font-size: 20px;">Select Sub Category</label>
+                                                <select class="form-control" name="category" >
+                                                    <%if(typeof(subCategoryList)!="undefined"){%>
+                                                        <%subCategoryList.map((cat)=>{%>
+                                                            <option value=<%-cat._id%>><%-cat.categoryName%></option>
+                                                            <%})%>
+
+                                                        <%}%>
+                                                </select>
+                                            </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label style="font-size: 20px;">Select Warranty</label>
+                                                    <select class="form-control" name="warranty">
+                                                        <option value="2 Months">2 Months</option>
+                                                        <option value="4 Months">4 Months</option>
+                                                        <option value="6 Months">6 Months</option>
+                                                        <option value="1 Year">1 Year</option>
+                                                        <option value="2 Year">2 Year</option>
+                                                        <option value="3 Year">3 Year</option>
+                                                        <option value="4 Year">4 Year</option>
+                                                        <option value="5 Year">5 Year</option>
+                                                    </select>
+                                                </div>
+                                                </div>
+                                        </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label style="font-size: 20px;">Product Sort Description</label>
+                                                        <textarea class="form-control" rows="3"
+                                                            style="font-size:20px;font-weight: 600;" name="sortDesc" required
+                                                            placeholder="Product Sort Descriptions..."></textarea>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label style="font-size: 20px;">Product Description</label>
+                                                        <textarea class="form-control" name="desc" required rows="3"
+                                                            style="font-size:20px;font-weight: 600;"
+                                                            placeholder="Product Descriptions..."></textarea>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="row" id="nonStorable">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1" style="font-size: 20px;">Price
+                                                            </label>
+                                                        <input type="text" class="form-control" id="price"
+                                                            placeholder="Product price" name="price" required
+                                                            style="font-size:20px;font-weight: 600;"/>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1" style="font-size: 20px;">Quantity
+                                                            </label>
+                                                        <input type="number" class="form-control" id="quantity"
+                                                            placeholder="Quantity" name="quantity" required
+                                                            style="font-size:20px;font-weight: 600;"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group hide" id="storable">
+                                                <label style="font-size: 20px">Select Storage Available</label>
+                                                <div class="form-group" style="font-size:30px;margin-left:5%;">
+                                                <%if(typeof(storageList)!="undefined"){%>
+                                                    <%storageList.map((storage)=>{%>
+                                                        <input type="checkbox" value="<%-storage._id%>" style="font-size:35px;cursor: pointer;" onchange="storageForm('<%-storage._id%>')">
+                                                        <label style="font-size: 20px;margin:5px;"><%-storage.ram%>|<%-storage.rom%></label>
+                                                        
+                                                        <%})%>
+                                                    <%}%>
+                                                </div>
+                                            </div>
+                                            <div class="form-group hide" id="childStorable">
+                                            <%if(typeof(storageList)!="undefined"){%>
+                                                <%storageList.map((storage)=>{%>
+                                                
+                                        <div class="form-group">
+                                            <div class="row hide" id="<%-storage._id%>">
+                                                <div class="col-4">
+                                                    <select style="width: 100%;height:100%;" name="storage_<%-storage.ram%>_<%-storage.rom%>" id="storage_<%-storage._id%>" disabled>
+                                                        <option selected value="<%-storage._id%>"><%-storage.ram%>|<%-storage.rom%></option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="col-4">
+                                                    <input disabled id="price_<%-storage.id%>" style="width: 100%;" type="text" name="price_<%-storage.ram%>_<%-storage.rom%>" placeholder="price" required/>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input disabled id="quantity_<%-storage.id%>" style="width: 100%;" type="text" name="quantity_<%-storage.ram%>_<%-storage.rom%>" placeholder="quantity" required/>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                            <%})%>
+
+                                                <%}%>
+                                            </div>
+                                            <!-- <div class="form-group">
+                                                <label style="font-size: 20px;">Select Size For <%-productName%></label>
+                                                <select class="form-control" name="size" >
+                                                    <%if(typeof(sizeList)!="undefined"){%>
+                                                        <%sizeList.map((size)=>{%>
+                                                            <option value=<%-size._id%>><%-size.name%></option>
+                                                            <%})%>
+
+                                                        <%}%>
+                                                </select>
+                                            </div> -->
+                                            
+                                            
+                                            
+                                            <div class="form-group">
+                                                <label for="formFileMultiple" style="font-size: 20px;" class="form-label">Select min 3 Image for Product</label>
+                                                <input class="form-control" type="file"  name="images" required id="formFileMultiple" multiple  style="padding:1%;font-size:15px;font-weight: 600;" min="3" accept="image/png, image/jpeg image/gif, image/jpeg">
+                                              </div>
+                                             
+
+                                              <div class="form-group" style="display: flex;align-items: center;justify-content: right; padding:1%;">
+                                                <button type="submit" class="btn btn-primary" style="width: 20%;padding: 10px;">Add Product</button>
+                                              </div>
+                                    </div>
+
+
+                                    </form>
+
+                                </div>
+
+                             
+                                                </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+            <script>
+                function toggleStorage(e){
+                    const storable=document.getElementById("storable")
+                    const nonStorable=document.getElementById("nonStorable")
+                    const childStorable=document.getElementById("childStorable")
+                    const price=document.getElementById(`price`)
+                   const quantity=document.getElementById(`quantity`)
+                   price.toggleAttribute("disabled")
+                   quantity.toggleAttribute("disabled")
+                    storable.classList.toggle("hide")
+                    nonStorable.classList.toggle("hide")
+                    childStorable.classList.toggle("hide")
+                }
+
+                function storageForm(e){
+                    const form=document.getElementById(e);
+                   const price=document.getElementById(`price_${e}`)
+                   const quantity=document.getElementById(`quantity_${e}`)
+                   const storage=document.getElementById(`storage_${e}`)
+                   form.classList.toggle("hide")
+                   price.toggleAttribute("disabled")
+                   quantity.toggleAttribute("disabled")
+                   storage.toggleAttribute("disabled")
+                }
+            </script>
+            
+
+
+            <script src="../../plugins/jquery/jquery.min.js"></script>
+            <!-- Bootstrap 4 -->
+            <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- DataTables  & Plugins -->
+            <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+            <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+            <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+            <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+            <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+            <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+            <script src="../../plugins/jszip/jszip.min.js"></script>
+            <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+            <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+            <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+            <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+            <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+            <!-- AdminLTE App -->
+            <script src="../../dist/js/adminlte.min.js"></script>
+            <!-- AdminLTE for demo purposes -->
+            <script src="../../dist/js/demo.js"></script>
+            <script>
+                $(function () {
+                    $("#example1").DataTable({
+                        "responsive": true, "lengthChange": false, "autoWidth": false,
+                        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                    $('#example2').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": false,
+                        "responsive": true,
+                    });
+                });
+            </script>
+</body>
+
+</html>

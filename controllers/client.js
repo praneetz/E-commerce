@@ -1,5 +1,5 @@
 const category=require("../models/category")
-const product=require("../models/product")
+const {productModal:product}=require("../models/product")
 const {createCategoryList}=require("./functions")
 exports.getHomeData=async(req,res)=>{
     try{
@@ -35,10 +35,14 @@ exports.getCategoryData=async(req,res)=>{
 
 exports.getProductDetails=async(req,res)=>{
     try{
+        let categoryItems=await category.getAllCategory()
+        const categories=createCategoryList(categoryItems);
+        let categoryChild=categoryItems.filter((d)=>d.subCategory!=null&&d.subCategory!="62bd3ac51b1b28e12fa97ffd")
+
         const productDetails=await product.findById(req.params.id)
-        console.log(productDetails)
-        return res.redirect("/")
-        return res.redirect("/")
+        if(!req.user)
+        return res.render("ProductDetails",{categories,categoryChild,product:productDetails})
+        return res.render("ProductDetails",{categories,categoryChild,product:productDetails,user:req.user})
 
     }catch(err){
         console.log(err)
