@@ -76,8 +76,21 @@
                                        <%-d.sortDesc%>
                                     </p>
                                     <div class="d-flex align-items-center justify-content-between mt-1">
-                                       <h6 class="font-weight-bold my-2">Rs:-<%-d.price%>
-                                       </h6>
+                                      
+                                       <%if(d.isFashion){%>
+                                          <%d.size.map((sd)=>{%>
+                                             <h6 class="font-weight-bold my-2"><%-sd.size.name  %> | Rs:-<%-sd.price%>
+                                             </h6>
+                                          <%})%>
+                                       <%}else if(d.isStorable){%>
+                                          <%d.storage.map((sd)=>{%>
+                                             <h6 class="font-weight-bold my-2"><%-sd.storage.ram%>|<%-sd.storage.rom%>  Rs:-<%-sd.price%>
+                                             </h6>
+                                          <%})%>
+                                       <%}else{%>
+                                          <h6 class="font-weight-bold my-2">Rs:-<%-d.price%>
+                                          </h6>
+                                       <%}%>
                                        <ul class="list-inline small">
                                           <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                                           <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
