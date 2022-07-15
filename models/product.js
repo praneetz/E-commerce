@@ -42,6 +42,10 @@ const productSchema = new mongoose.Schema({
 
 const fashionsSchema = new mongoose.Schema({
   ...productSchema.obj,
+  isFashion:{
+    type:Boolean,
+    default:true
+  },
   size: [
     {
       quantity: {
@@ -59,6 +63,22 @@ const fashionsSchema = new mongoose.Schema({
     },
   ],
 });
+const nonFashionsSchema = new mongoose.Schema({
+  ...productSchema.obj,
+  isFashion:{
+    type:Boolean,
+    default:false
+  }, 
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+
+});
 
 const electronics = new mongoose.Schema({
   ...productSchema.obj,
@@ -67,7 +87,7 @@ const electronics = new mongoose.Schema({
     default: false,
   },
   warranty: {
-    type: Number,
+    type: String,
   },
 });
 const nonStorableSchema = new mongoose.Schema({
@@ -108,7 +128,8 @@ const nonStorableProduct = mongoose.model(
   nonStorableSchema
 );
 const storableProduct = mongoose.model("storableProduct", storableSchema);
-const fashionProduct = mongoose.model("fashinproduct", fashionsSchema);
+const fashionProduct = mongoose.model("fashionproduct", fashionsSchema);
+const nonFashionProduct=mongoose.model("nonfashionproduct",nonFashionsSchema);
 const sizeModal = mongoose.model("size", sizeSchema);
 const storageModal = mongoose.model("storage", storageSchema);
 
@@ -119,4 +140,5 @@ module.exports = {
   storageModal,
   nonStorableProduct,
   storableProduct,
+  nonFashionProduct
 };

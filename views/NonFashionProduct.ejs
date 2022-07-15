@@ -53,7 +53,7 @@
                                         <h3 class="card-title"><%-productName%></h3>
                                     </div>
                                     <div class="card-body">
-                                        <form action="add/p2" method="post" enctype="multipart/form-data">
+                                        <form action="add/nonfashion/p2" method="post" enctype="multipart/form-data">
                                                <%if(typeof(err)!="undefined"){%>
                                     <div class="form-group" style="text-align: center;color: red;font-size: 20px;">
                                         <label>
@@ -68,6 +68,8 @@
                                                 </label>
                                             </div>
                                             <%}%>
+                                            <div class="row">
+                                                <div class="col-6">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1" style="font-size: 20px;">Product
                                                     Name</label>
@@ -75,6 +77,8 @@
                                                     placeholder="Product Name" name="productName" required
                                                     style="font-size:20px;font-weight: 600;" value="<%-prevData.productName%>" readonly/>
                                             </div>
+                                        </div>
+                                            <div class="col-6">
                                             <div class="form-group">
                                                 <label style="font-size: 20px;">Select Sub Category</label>
                                                 <select class="form-control" name="category" >
@@ -85,6 +89,29 @@
 
                                                         <%}%>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1" style="font-size: 20px;">Price
+                                                            </label>
+                                                        <input type="text" class="form-control" id="price"
+                                                            placeholder="Product price" name="price" required
+                                                            style="font-size:20px;font-weight: 600;"/>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1" style="font-size: 20px;">Quantity
+                                                            </label>
+                                                        <input type="number" class="form-control" id="quantity"
+                                                            placeholder="Quantity" name="quantity" required
+                                                            style="font-size:20px;font-weight: 600;"/>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-6">
@@ -106,40 +133,6 @@
                                                     
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label style="font-size: 20px">Select Size Available</label>
-                                                <div class="form-group" style="font-size:30px;margin-left:5%;">
-                                                <%if(typeof(sizeList)!="undefined"){%>
-                                                    <%sizeList.map((size)=>{%>
-                                                        <label style="font-size: 20px;margin:5px;"><%-size.name%></label>
-                                                        <input type="checkbox" value="<%-size._id%>" style="font-size:35px;cursor: pointer;" onchange="createForm('<%-size._id%>')">
-                                                        <%})%>
-                                                    <%}%>
-                                                </div>
-                                            </div>
-                                                <%if(typeof(sizeList)!="undefined"){%>
-                                                    <%sizeList.map((size)=>{%>
-                                                    
-                                            <div class="form-group">
-                                                <div class="row hide" id="<%-size._id%>">
-                                                    <div class="col-4">
-                                                        <select style="width: 100%;height:100%;" name="size_<%-size.name%>" id="size_<%-size._id%>" disabled>
-                                                            <option selected value="<%-size._id%>"><%-size.name%></option>
-                                                        </select>
-
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <input disabled id="price_<%-size.id%>" style="width: 100%;" type="text" name="price_<%-size.name%>" placeholder="price" required/>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <input disabled id="quantity_<%-size.id%>" style="width: 100%;" type="text" name="quantity_<%-size.name%>" placeholder="quantity" required/>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                                <%})%>
-
-                                                    <%}%>
                                             <!-- <div class="form-group">
                                                 <label style="font-size: 20px;">Select Size For <%-productName%></label>
                                                 <select class="form-control" name="size" >

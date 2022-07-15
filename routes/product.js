@@ -1,5 +1,5 @@
 const route=require("express").Router()
-const {addProductP1,getProduct,editProduct,updateProduct,deleteImg,uploadImage,createSize,addProductP2,createStorage,addElecProductP2}=require("../controllers/product")
+const {addProductP1,getProduct,editProduct,updateProduct,deleteImg,uploadImage,createSize,addProductP2,createStorage,addElecProductP2,addNonFashionP2}=require("../controllers/product")
 const category=require("../models/category")
 const multer=require("multer")
 const path=require("path")
@@ -23,15 +23,21 @@ const storage = multer.diskStorage({
     const upload = multer({storage : storage}).array("images");
 
 route.get("/product/add",async(req,res)=>{
+    const {err,success}=req.query
     let categoryList=await category.getAllCategory()
     categoryList=categoryList.filter((d)=>d.subCategory==null)
-    res.render("AddProductP1",{categoryList})
+    if(err)
+    return res.render("AddProductP1",{categoryList,err})
+    if(success)
+    return res.render("AddProductP1",{categoryList,success})
+    return res.render("AddProductP1",{categoryList})
 })
 
 
 route.post("/product/add",addProductP1)
-route.post("/product/add/p2",addProductP2)
-route.post("/product/add/elec/p2",addElecProductP2)
+route.post("/product/add/p2",upload,addProductP2)
+route.post("/product/add/elec/p2",upload,addElecProductP2)
+route.post("/product/add/nonfashion/p2",upload,addNonFashionP2)
 
 route.get("/product/edit/:id",editProduct);
 
